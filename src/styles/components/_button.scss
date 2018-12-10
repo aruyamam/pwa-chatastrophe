@@ -1,0 +1,32 @@
+.button {
+   @at-root {
+
+      & {
+         margin-top: 1rem;
+         padding: 7px 10px;
+         border: none;
+         background-color: #fff;
+         border-radius: 3px;
+         text-transform: uppercase;
+         cursor: pointer;
+      }
+
+      &:hover {
+         opacity: 0.75;
+      }
+
+      .button--block {
+         display: block;
+         width: 100%;
+      }
+
+      .button--red {
+         background-color: $primary-color-light;
+         color: #fff;
+
+         &:focus {
+            background-color: $primary-color;
+         }
+      }
+   }
+}

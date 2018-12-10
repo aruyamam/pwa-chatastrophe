@@ -8,16 +8,22 @@
     "start": "webpack-dev-server --hot --mode development"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "fs-extra": "^7.0.1",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "postcss-loader": "^3.0.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-hot-loader": "^4.3.12"
+    "react-hot-loader": "^4.3.12",
+    "sass-loader": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
     "@babel/plugin-proposal-class-properties": "^7.2.1",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.4.2",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "css-loader": "^2.0.0",
