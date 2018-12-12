@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import { firebase } from '../firebase/firebase';
 
 class LoginContainer extends Component {
    state = {
       email: '',
       password: '',
+      error: '',
    };
 
    handleChange = (event) => {
@@ -13,11 +15,45 @@ class LoginContainer extends Component {
 
    handleSubmit = (event) => {
       event.preventDefault();
-      console.log(this.state);
+      this.setState({ error: '' });
+      const { email, password } = this.state;
+
+      if (email && password) {
+         return this.login(email, password);
+      }
+
+      return this.setState({ error: 'Please fill in both fields.' });
    };
 
+   login(email, password) {
+      firebase
+         .auth()
+         .signInWithEmailAndPassword(email, password)
+         .then(res => console.log(res))
+         .catch((error) => {
+            if (error.code === 'auth/user-not-found') {
+               this.signup(email, password);
+            }
+            else {
+               this.setState({ error: 'Error logging in.' });
+            }
+         });
+   }
+
+   signup(email, password) {
+      firebase
+         .auth()
+         .createUserWithEmailAndPassword(email, password)
+         .then((res) => {
+            console.log(res);
+         })
+         .catch((err) => {
+            this.setState({ error: 'Error siginig up.' });
+         });
+   }
+
    render() {
-      const { email, password } = this.state;
+      const { email, password, error } = this.state;
 
       return (
          <div id="LoginContainer" className="LoginContainer inner-container">
@@ -38,6 +74,7 @@ class LoginContainer extends Component {
                   value={password}
                   onChange={this.handleChange}
                />
+               {error && <p className="error">{error}</p>}
                <button className="button button--red button--block" type="submit">
                   Login
                </button>

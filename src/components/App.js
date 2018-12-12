@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import LoginContainer from './LoginContainer';
-// import './app.css';
+import { firebase } from '../firebase/firebase';
 
 class App extends Component {
-   state = {};
+   state = {
+      user: null,
+   };
+
+   componentDidMount() {
+      firebase.auth().onAuthStateChanged((user) => {
+         if (user) {
+            this.setState({ user });
+         }
+      });
+   }
 
    render() {
       return (
