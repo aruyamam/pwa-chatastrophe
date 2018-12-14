@@ -1,0 +1,33 @@
+.Chat-input {
+   @at-root {
+      
+      & {
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         width: 100%;
+         padding-top: 5px;
+         background-color: #fff;
+      }
+
+      & textarea {
+         float: left;
+         width: 85%;
+         padding: 5px 8px;
+         border-radius: 10px;
+         border: 1px solid rgba(0,0,0, 0.2);
+      }
+
+      & button {
+         width: 15%;
+         border: none;
+         background: none;
+
+         & svg {
+            width: 24px;
+            height: 24px;
+            text-align: center;
+         }
+      }
+   }
+}

@@ -30,7 +30,7 @@ body {
    background: linear-gradient(to bottom, $primary-color-light, $primary-color-dark);
    color: #655a56;
    font-family: 'khula', sans-serif;
-   font-size: 1.6rem;
+   font-size: 1.3rem;
 }
 
 #root {
@@ -50,6 +50,11 @@ body {
    border-radius: 10px;
    box-shadow: 00 20px 80px rgba(0,0,0, 0.6);
    flex: 1;
+}
+
+#ChatContainer {
+   position: relative;
+   padding-bottom: 50px;
 }
 
 .inner-container {

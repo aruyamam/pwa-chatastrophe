@@ -1,6 +1,9 @@
 .Header {
    @at-root {
       & {
+         display: flex;
+         justify-content: space-between;
+         align-items: flex-start;
          width: 100%;
          height: 50px;
       }
