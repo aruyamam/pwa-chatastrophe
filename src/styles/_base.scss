@@ -57,6 +57,12 @@ body {
    padding-bottom: 50px;
 }
 
+#message-container {
+   height: calc(100% - 45px);
+   padding: 0 10px;
+   overflow-y: auto;
+}
+
 .inner-container {
    height: 100%;
    overflow: hidden;

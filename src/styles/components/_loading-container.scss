@@ -1,0 +1,14 @@
+#loading-container {
+   @at-root {
+      & {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         height: 100%;
+      }
+
+      & img {
+         width: 100px;
+      }
+   }
+}

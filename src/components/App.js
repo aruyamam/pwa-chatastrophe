@@ -10,6 +10,7 @@ class App extends Component {
    state = {
       user: null,
       messages: [],
+      messagesLoaded: false,
    };
 
    componentDidMount() {
@@ -27,6 +28,9 @@ class App extends Component {
          .ref('/messages')
          .on('value', (snapshot) => {
             this.onMessage(snapshot);
+            if (!this.state.messagesLoaded) {
+               this.setState({ messagesLoaded: true });
+            }
          });
    }
 
@@ -56,7 +60,7 @@ class App extends Component {
    };
 
    render() {
-      const { messages, user } = this.state;
+      const { messages, user, messagesLoaded } = this.state;
 
       return (
          <div id="container" className="inner-container">
@@ -67,6 +71,7 @@ class App extends Component {
                   <ChatContainer
                      user={user}
                      messages={messages}
+                     messagesLoaded={messagesLoaded}
                      onSubmit={this.handleSubmitMessage}
                   />
                )}

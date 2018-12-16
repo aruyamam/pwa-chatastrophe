@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import { firebase } from '../firebase/firebase';
@@ -6,6 +7,23 @@ import { firebase } from '../firebase/firebase';
 class ChatContainer extends Component {
    state = {
       newMessage: '',
+   };
+
+   componentDidMount() {
+      this.scrollToBottom();
+   }
+
+   componentWillUpdate(previousProps) {
+      if (previousProps.messages.length !== this.props.messages.length) {
+         this.scrollToBottom();
+      }
+   }
+
+   scrollToBottom = () => {
+      const messageContainer = ReactDOM.findDOMNode(this.messageContainer);
+      if (messageContainer) {
+         messageContainer.scrollTop = messageContainer.scrollHeight;
+      }
    };
 
    handleLogout = () => {
@@ -40,7 +58,7 @@ class ChatContainer extends Component {
 
    render() {
       const { newMessage } = this.state;
-      const { messages, user } = this.props;
+      const { messages, user, messagesLoaded } = this.props;
 
       return (
          <div id="ChatContainer" className="inner-container">
@@ -49,14 +67,28 @@ class ChatContainer extends Component {
                   Logout
                </button>
             </Header>
-            <div id="messaage-container">
-               {messages.map((msg, i) => (
-                  <div className={`message ${user.email === msg.author && 'mine'}`} key={msg.id}>
-                     <p>{msg.msg}</p>
-                     {this.getAuthor(msg, messages[i + 1])}
-                  </div>
-               ))}
-            </div>
+            {messagesLoaded ? (
+               <div
+                  id="message-container"
+                  ref={(element) => {
+                     this.messageContainer = element;
+                  }}
+               >
+                  {messages.map((msg, i) => (
+                     <div
+                        className={`message ${user && user.email === msg.author && 'mine'}`}
+                        key={msg.id}
+                     >
+                        <p>{msg.msg}</p>
+                        {this.getAuthor(msg, messages[i + 1])}
+                     </div>
+                  ))}
+               </div>
+            ) : (
+               <div id="loading-container">
+                  <img src="/assets/icon.png" id="loader" alt="logo" />
+               </div>
+            )}
             <div id="chat-input" className="Chat-input">
                <textarea
                   placeholder="Add your message..."
