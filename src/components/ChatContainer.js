@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import Header from './Header';
@@ -75,10 +76,7 @@ class ChatContainer extends Component {
                   }}
                >
                   {messages.map((msg, i) => (
-                     <div
-                        className={`message ${user && user.email === msg.author && 'mine'}`}
-                        key={msg.id}
-                     >
+                     <div className={`message ${user.email === msg.author && 'mine'}`} key={msg.id}>
                         <p>{msg.msg}</p>
                         {this.getAuthor(msg, messages[i + 1])}
                      </div>
@@ -106,5 +104,20 @@ class ChatContainer extends Component {
       );
    }
 }
+
+ChatContainer.propTypes = {
+   messagesLoaded: PropTypes.bool.isRequired,
+   user: PropTypes.shape({
+      email: PropTypes.string,
+   }).isRequired,
+   onSubmit: PropTypes.func.isRequired,
+   messages: PropTypes.arrayOf(
+      PropTypes.shape({
+         id: PropTypes.string,
+         msg: PropTypes.string,
+         author: PropTypes.string,
+      }),
+   ).isRequired,
+};
 
 export default ChatContainer;

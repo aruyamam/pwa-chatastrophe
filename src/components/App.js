@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Route, withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import { firebase } from '../firebase/firebase';
@@ -8,7 +9,9 @@ import UserContainer from './UserContainer';
 
 class App extends Component {
    state = {
-      user: null,
+      user: {
+         email: '',
+      },
       messages: [],
       messagesLoaded: false,
    };
@@ -19,7 +22,11 @@ class App extends Component {
             this.setState({ user });
          }
          else {
-            this.props.history.push('/login');
+            const {
+               history: { push },
+            } = this.props;
+
+            push('/login');
          }
       });
 
@@ -77,10 +84,25 @@ class App extends Component {
                )}
             />
             <Route path="/login" component={LoginContainer} />
-            <Route path="/users/:id" component={UserContainer} />
+            <Route
+               path="/users/:id"
+               render={({ history, match }) => (
+                  <UserContainer
+                     messages={messages}
+                     messagesLoaded={messagesLoaded}
+                     userID={match.params.id}
+                  />
+               )}
+            />
          </div>
       );
    }
 }
+
+App.propTypes = {
+   history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+   }).isRequired,
+};
 
 export default hot(module)(withRouter(App));
