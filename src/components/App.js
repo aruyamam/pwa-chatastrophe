@@ -6,6 +6,7 @@ import { firebase } from '../firebase/firebase';
 import LoginContainer from './LoginContainer';
 import ChatContainer from './ChatContainer';
 import UserContainer from './UserContainer';
+import NotificationResource from '../resources/NotificationResource';
 
 class App extends Component {
    state = {
@@ -17,9 +18,13 @@ class App extends Component {
    };
 
    componentDidMount() {
+      this.notifications = new NotificationResource(firebase.messaging(), firebase.database());
+
       firebase.auth().onAuthStateChanged((user) => {
          if (user) {
             this.setState({ user });
+            // this.listenForMessages();
+            this.notifications.changeUser(user);
          }
          else {
             const {

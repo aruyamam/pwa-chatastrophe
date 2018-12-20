@@ -3,3 +3,4 @@ build/
 bundle.js
 .env
 .firebase
+public/firebase-messaging-sw.js
